@@ -1,16 +1,10 @@
-class Student:
-    count = 0
+def is_even(number):
+    return number % 2 == 0
 
-    def __init__(self, height=160):
-        self.height = height
-        Student.count += 1
+number_check = 10
+result = is_even(number_check)
 
-
-print()
-student = Student()
-student1 = Student(height=170)
-student2 = Student(height=150)
-print(student.height)
-print(student1.height)
-print(student2.height)
-print(student.count)
+if result:
+    print(f"{number_check} є парним числом.")
+else:
+    print(f"{number_check} є непарним числом.")
