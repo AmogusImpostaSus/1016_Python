@@ -1,0 +1,46 @@
+class Student:
+    count = 0
+
+    def __init__(self, name="No name", height=160, money=0):
+        self.name = name
+        self.height = height
+        self.money = money
+        Student.count += 1
+
+    def __str__(self):
+        return f"Я студент {self.name}.\nМій зріст {self.height} см.\nУ мене {self.money} грошей."
+
+    def __del__(self):
+        print("Я пішов....")
+
+    def work(self, hours):
+        hourly_rate = 10
+        earnings = hours * hourly_rate
+        self.money += earnings
+        print(f"{self.name} працював {hours} годин і заробив {earnings} грн.")
+
+    def rest(self, hours):
+        cost_per_hour = 5
+        expenses = hours * cost_per_hour
+        if expenses > self.money:
+            print(f"{self.name} не може собі дозволити відпочинок. Потрібно піти на роботу!")
+            self.work(10)
+        else:
+            self.money -= expenses
+            print(f"{self.name} відпочивав {hours} годин і витратив {expenses} грн.")
+
+    def study(self, hours):
+        if hours > 5:
+            print(f"{self.name} занадто втомлений для навчання. Потрібно відпочити.")
+            self.rest(5)
+        else:
+            print(f"{self.name} вивчав предмет протягом {hours} годин.")
+
+
+print(Student.count)
+student = Student("Vitalik", 170, money=50)
+print(student)
+
+student.work(8)
+student.rest(4)
+student.study(3)
