@@ -7,13 +7,7 @@ class Human:
         self.enjoyment = 100
         self.home = home
         self.car = car
-
-    def get_home(self, home):
-        if home != None:
-            print("Продали будинок")
-        self.home = home
-        print("Придбали новий будинок")
-
+        self.knowledge = 0
     def get_car(self, car):
         if car != None:
             print(f"Продали авто марки {car.marka}")
@@ -31,7 +25,7 @@ class Human:
     def chill(self):
         print("Відпочиваємо")
         enjoyment = random.randint(3, 8)
-        print(f"Ви відпочили, і почуваєтесь на всі {enjoyment} процентів!")
+        print(f"Ви відпочили, і почуваєтесь на всі {enjoyment}!")
         self.enjoyment += enjoyment
 
     def shopping(self):
@@ -56,13 +50,14 @@ class Human:
         print("Вчимося новому")
         knowledge_gain = random.randint(3, 10)
         print(f"Вивчили щось нове і отримали {knowledge_gain} знань!")
+        self.knowledge += knowledge_gain
         self.enjoyment += random.randint(-5, 5)
 
     def clean_house(self):
         if self.home == None:
-            print(f"ти не можешь прибратися")
+            print(f"Ти не можешь прибратися")
         else:
-            print("пішли прибиратися")
+            print("Пішли прибиратися")
             self.home.cleanlinies_level += 1
             self.enjoyment -= 3
 
@@ -75,9 +70,27 @@ class Human:
         else:
             print("Недостатньо грошей для відпочинку.")
 
+    def upgrade_home(self):
+        cost = 100
+        if self.money >= cost:
+            print(f"Оновили свій будинок, порядок в кімнаті покращився!")
+            self.money -= cost
+            self.home.cleanlinies_level += 10
+        else:
+            print("Недостатньо грошей для оновлення будинку.")
+
+    def buy_entertainment(self):
+        cost = 30
+        if self.money >= cost:
+            print("Купили новий розваги, зростив рівень задоволення!")
+            self.money -= cost
+            self.enjoyment += random.randint(10, 20)
+        else:
+            print("Недостатньо грошей для купівлі розваг.")
+
     def life(self):
 
-        r = random.randint(1, 6)
+        r = random.randint(1, 9)
         if r == 1:
             self.work()
         elif r == 2:
@@ -90,6 +103,13 @@ class Human:
             self.visit_friends()
         elif r == 6:
             self.learn()
+        elif r == 7:
+            self.buy_entertainment()
+        elif r == 8:
+             self.go_on_vacation()
+        elif r == 9:
+            self.upgrade_home()
+
 
         if self.enjoyment < 5:
             self.chill()
@@ -111,6 +131,7 @@ class Human:
         print(f"Залишок грошей     - {self.money}")
         print(f"Наявність їжі      - {self.home.food}")
         print(f"Порядок в кімнаті  - {self.home.cleanlinies_level}")
+        print(f"Знання             - {self.knowledge}")
 
 class Car:
     def __init__(self, marka):
@@ -130,25 +151,7 @@ class Home:
         self.food = 50
         self.cleanlinies_level = 50
 
-    def upgrade_home(self):
-        cost = 100
-        if self.money >= cost:
-            print(f"Оновили свій будинок, порядок в кімнаті покращився!")
-            self.money -= cost
-            self.home.cleanlinies_level += 10
-        else:
-            print("Недостатньо грошей для оновлення будинку.")
-
-    def buy_entertainment(self):
-        cost = 30
-        if self.money >= cost:
-            print("Купили новий розваги, зростив рівень задоволення!")
-            self.money -= cost
-            self.enjoyment += random.randint(10, 20)
-        else:
-            print("Недостатньо грошей для купівлі розваг.")
-
-human = Human("Serg", car=Car("BMW X11"), home=Home())
+human = Human("людини", car=Car("BMW X11"), home=Home())
 day = 1
 while(human.is_alive()):
     print()
@@ -156,3 +159,6 @@ while(human.is_alive()):
     human.life()
     human.info()
     day += 1
+    if day > 200:
+        print("Ви прожили 200 днів")
+        exit(0)
